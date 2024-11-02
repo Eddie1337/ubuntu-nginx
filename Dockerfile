@@ -3,8 +3,13 @@ MAINTAINER LanCache.Net Team <team@lancache.net>
 ARG DEBIAN_FRONTEND=noninteractive
 COPY overlay/ /
 RUN apt-get update && \
-    apt-get install -y nginx-full inotify-tools --no-install-recommends && \
+    apt-get install -y git gcc make libpcre3-dev zlib1g-dev libssl-dev inotify-tools --no-install-recommends && \
     apt-get -y clean && \
+    git clone https://github.com/eddie1337/nginx && \
+    cd nginx && \
+    auto/configure && \
+    make && \
+    make install && \
     rm -rf /var/lib/apt/lists/*
 RUN \
     chmod 777 /opt/nginx/startnginx.sh && \
